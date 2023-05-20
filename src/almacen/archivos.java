@@ -24,12 +24,16 @@ public class archivos {
     List<datos> contenido = new ArrayList<>();
 
     public List<datos> Leer(){
+        String linea;
+        datos Datos;
         try{
         FileReader archivo = new FileReader("Datos.txt");
         BufferedReader br = new BufferedReader(archivo);
-        String linea = null;
         while ((linea = br.readLine()) != null){
-            System.out.println("");
+            Datos = new datos();
+            convertir convertir = new convertir();
+            Datos = convertir.aclase(linea);
+            contenido.add(Datos);
         }
     }catch (FileNotFoundException ex) {
                 ex.printStackTrace();
@@ -37,7 +41,7 @@ public class archivos {
                 ex.printStackTrace();
            }
             
-        return null;
+        return contenido;
     }
     
     public boolean Grabar(datos cadena){
