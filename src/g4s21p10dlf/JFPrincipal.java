@@ -7,7 +7,10 @@ package g4s21p10dlf;
 
 import almacen.archivos;
 import informacion.datos;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,11 +21,17 @@ public class JFPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form JFPrincipal
      */
+    List<datos> lista = new ArrayList<>();
+    
     public JFPrincipal() {
         initComponents();
         btnguardar.setEnabled(false);
         btncancelar.setEnabled(false);
         
+        
+        archivos archivo = new archivos();
+        lista = archivo.Leer();
+        CargarDatos();
     }
 
     /**
@@ -36,7 +45,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaDatos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -55,19 +64,16 @@ public class JFPrincipal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("AGENDA");
 
-        jTable1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDatos.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Nombre", "Edad", "Correo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaDatos);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel2.setText("Nombre");
@@ -204,6 +210,9 @@ public class JFPrincipal extends javax.swing.JFrame {
         btnnuevo.setEnabled(true);
         btnguardar.setEnabled(false);
         btncancelar.setEnabled(false);
+        
+        lista = Archivos.Leer();
+        CargarDatos();
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
@@ -247,6 +256,19 @@ public class JFPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void CargarDatos(){
+        DefaultTableModel modelotabla = new DefaultTableModel();
+        modelotabla.addColumn("Nombre");
+        modelotabla.addColumn("Edad");
+        modelotabla.addColumn("Correo");
+        tablaDatos.setModel(modelotabla);
+        DefaultTableModel tabla = (DefaultTableModel) this.tablaDatos.getModel();
+        for (datos Datos:lista){
+        Object fila[] = new Object[]{Datos.getNombre(),Datos.getEdad(),Datos.getCorreo()};
+        tabla.addRow(fila);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncancelar;
@@ -259,7 +281,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaDatos;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtedad;
     private javax.swing.JTextField txtnombre;
